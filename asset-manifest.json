@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/esoft/static/css/main.0be5b3e6.css",
+    "main.js": "/esoft/static/js/main.3db66965.js",
+    "static/js/453.741d6b95.chunk.js": "/esoft/static/js/453.741d6b95.chunk.js",
+    "index.html": "/esoft/index.html",
+    "main.0be5b3e6.css.map": "/esoft/static/css/main.0be5b3e6.css.map",
+    "main.3db66965.js.map": "/esoft/static/js/main.3db66965.js.map",
+    "453.741d6b95.chunk.js.map": "/esoft/static/js/453.741d6b95.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0be5b3e6.css",
+    "static/js/main.3db66965.js"
+  ]
+}
