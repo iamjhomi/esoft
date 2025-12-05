@@ -94,8 +94,11 @@ function AcademicCalendar() {
         sems[i].start = '';
         sems[i].end = '';
       } else {
-        sems[i].start = prevEnd;
-        sems[i].end = addDays(prevEnd, endOffset);
+        // Weekend batch: next semester starts 1 day after previous end
+        // Weekday batch: next semester starts on the same day as previous end
+        const nextStart = isWeekend ? addDays(prevEnd, 1) : prevEnd;
+        sems[i].start = nextStart;
+        sems[i].end = addDays(nextStart, endOffset);
       }
     }
 
@@ -104,10 +107,17 @@ function AcademicCalendar() {
 
     const addBatch = (type='weekday') => {
     if (!isEditing) return;
-    const nextId = batches.length + 1;
-    const name = `Batch ${nextId}` + (type === 'weekend' ? ' (Weekend)' : '');
-    const newBatch = { id: nextId, batchName: name, type, semesters: initialSemesters.map(s => ({ ...s })), assignments: [] };
-    setBatches(prev => [...prev, newBatch]);
+    const nextId = Date.now(); // Use timestamp for unique ID
+    const name = `Batch ${batches.length + 1}` + (type === 'weekend' ? ' (Weekend)' : '');
+    // Create semesters with unique IDs for this batch
+    const newSemesters = [
+      { id: `${nextId}-1`, name: '1st Semester', start: '', end: '' },
+      { id: `${nextId}-2`, name: '2nd Semester', start: '', end: '' },
+      { id: `${nextId}-3`, name: '3rd Semester', start: '', end: '' },
+      { id: `${nextId}-4`, name: '4th Semester', start: '', end: '' },
+    ];
+    const newBatch = { id: nextId, batchName: name, type, semesters: newSemesters, assignments: [] };
+    setBatches(prev => [newBatch, ...prev]); // Add to beginning
   };
 
     const handleSaveBatch = async (batchIndex) => {
@@ -201,7 +211,6 @@ function AcademicCalendar() {
     ];
 
     const openAssignModal = (batchIndex) => {
-      if (!isEditing) return;
       setAssignBatchIndex(batchIndex);
       setSelectedSubject('');
       setAssignRelease('');
@@ -325,12 +334,12 @@ function AcademicCalendar() {
                                 const realIndex = batches.findIndex(b => b.id === batch.id);
                                 if (realIndex !== -1) removeBatch(realIndex);
                               }}>🗑️</button>
-                              <button className="small-btn" onClick={() => {
-                                const realIndex = batches.findIndex(b => b.id === batch.id);
-                                if (realIndex !== -1) openAssignModal(realIndex);
-                              }}>Deadline Release</button>
                             </>
                           )}
+                          <button className="small-btn" onClick={() => {
+                            const realIndex = batches.findIndex(b => b.id === batch.id);
+                            if (realIndex !== -1) openAssignModal(realIndex);
+                          }}>Deadline Release</button>
                     </div>
                   </th>
                 </tr>
