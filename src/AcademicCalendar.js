@@ -191,7 +191,8 @@ function AcademicCalendar() {
       // dateStr expected in YYYY-MM-DD
       const parts = dateStr.split('-');
       if (parts.length !== 3) return dateStr;
-      return `${parts[2]}/${parts[1]}/${parts[0]}`;
+      // Return in YYYY/MM/DD as requested by user
+      return `${parts[0]}/${parts[1]}/${parts[2]}`;
     }
 
     // modules mapping by semester index (0-based)
