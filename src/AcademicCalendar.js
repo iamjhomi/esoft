@@ -372,10 +372,10 @@ function AcademicCalendar() {
                                 }}
                               />
                             ) : (
-                              <input type="date" value={s.start} readOnly />
+                              <input type="text" value={formatToDDMMYYYY(s.start)} readOnly />
                             )
                           ) : (
-                            <input type="date" value={s.start} readOnly />
+                            <input type="text" value={formatToDDMMYYYY(s.start)} readOnly />
                           )}
                       </td>
                       <td>
